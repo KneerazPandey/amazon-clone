@@ -1,5 +1,6 @@
 import 'package:amazon_frontend/core/common/custom_elevated_button.dart';
 import 'package:amazon_frontend/core/common/widget.dart';
+import 'package:amazon_frontend/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:amazon_frontend/core/constant/constant.dart';
 
@@ -19,6 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  late AuthService _authService;
 
   @override
   void initState() {
@@ -28,6 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _authService = AuthService();
     super.initState();
   }
 
@@ -37,6 +40,15 @@ class _AuthScreenState extends State<AuthScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void register() async {
+    await _authService.register(
+      email: _emailController.text,
+      name: _nameController.text,
+      password: _passwordController.text,
+      context: context,
+    );
   }
 
   @override
@@ -104,7 +116,9 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                             const SizedBox(height: 20),
                             CustomElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                register();
+                              },
                               text: 'Sign Up',
                             ),
                             const SizedBox(height: 30),

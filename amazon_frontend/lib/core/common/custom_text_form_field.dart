@@ -32,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
       validator: (String? value) {
         return null;
       },
+      obscureText: obscureText,
     );
   }
 }

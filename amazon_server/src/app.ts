@@ -7,9 +7,11 @@ import router from './routes/route';
 export default class App {
     public express: Application;
     public port: number;
+    public host: string;
 
     constructor() {
         this.port = parseInt(process.env.PORT as string);
+        this.host = process.env.HOST as string;
         this.express = express();
 
         this.initializeMiddleware();
@@ -38,8 +40,8 @@ export default class App {
     }
 
     public run() {
-        this.express.listen(this.port, () => {
-            console.log(`Server is listning at http://localhost:${this.port}`);
+        this.express.listen(this.port,  this.host,() => {
+            console.log(`Server is listning at http://${this.host}:${this.port}`);
         });
     }
 
