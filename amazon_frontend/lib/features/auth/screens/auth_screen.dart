@@ -42,8 +42,14 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
-  void register() async {
-    await _authService.register(
+  void clearTextField() {
+    _nameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+  }
+
+  Future<bool> register() async {
+    return await _authService.register(
       email: _emailController.text,
       name: _nameController.text,
       password: _passwordController.text,
@@ -116,8 +122,14 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                             const SizedBox(height: 20),
                             CustomElevatedButton(
-                              onPressed: () {
-                                register();
+                              onPressed: () async {
+                                bool success = await register();
+                                if (success) {
+                                  clearTextField();
+                                  setState(() {
+                                    _authType = AuthType.signIn;
+                                  });
+                                }
                               },
                               text: 'Sign Up',
                             ),

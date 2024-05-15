@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class AuthService {
-  Future<void> register({
+  Future<bool> register({
     required String email,
     required String name,
     required String password,
@@ -27,7 +27,7 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      if (!context.mounted) return;
+      if (!context.mounted) return false;
       handleHttpError(
         response: response,
         context: context,
@@ -38,11 +38,13 @@ class AuthService {
           );
         },
       );
+      return true;
     } catch (error) {
       showSnackBar(
         context: context,
         text: error.toString(),
       );
+      return false;
     }
   }
 }
