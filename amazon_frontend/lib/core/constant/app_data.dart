@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class AppData {
   static String baseUrl = 'http://${dotenv.env["HOST"]}:${dotenv.env["PORT"]}';
 
+  static String tokenKey = 'X-AUTH-TOKEN';
+
   static const List<String> carouselImages = [
     'https://images-eu.ssl-images-amazon.com/images/G/31/img21/Wireless/WLA/TS/D37847648_Accessories_savingdays_Jan22_Cat_PC_1500.jpg',
     'https://images-eu.ssl-images-amazon.com/images/G/31/img2021/Vday/bwl/English.jpg',

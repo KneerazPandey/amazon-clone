@@ -2,9 +2,13 @@ import 'dart:convert';
 
 import 'package:amazon_frontend/core/constant/app_data.dart';
 import 'package:amazon_frontend/core/errors/errors.dart';
+import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/utils/show_snack_bar.dart';
+import 'package:amazon_frontend/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   Future<bool> register({
@@ -70,10 +74,22 @@ class AuthService {
       handleHttpError(
         response: response,
         context: context,
-        onSuccess: () {
+        onSuccess: () async {
+          String token = json.decode(response.body)['token'];
+          print(token);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString(AppData.tokenKey, token);
+          if (!context.mounted) return;
+          Provider.of<UserProvider>(context, listen: false).setUser(
+            response.body,
+          );
           showSnackBar(
             context: context,
             text: 'Login Successfull',
+          );
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.routeName,
+            (route) => false,
           );
         },
       );
