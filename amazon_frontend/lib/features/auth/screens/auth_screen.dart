@@ -57,6 +57,14 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  Future<bool> login() async {
+    return await _authService.login(
+      email: _emailController.text,
+      password: _passwordController.text,
+      context: context,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -174,7 +182,9 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                             const SizedBox(height: 20),
                             CustomElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await login();
+                              },
                               text: 'Sign In',
                             ),
                             const SizedBox(height: 30),

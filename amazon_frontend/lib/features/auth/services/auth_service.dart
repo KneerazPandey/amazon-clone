@@ -47,4 +47,43 @@ class AuthService {
       return false;
     }
   }
+
+  Future<bool> login({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      Uri uri = Uri.parse('${AppData.baseUrl}/api/user/login/');
+      Map<String, dynamic> data = <String, dynamic>{
+        'email': email,
+        'password': password,
+      };
+      Response response = await post(
+        uri,
+        body: json.encode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (!context.mounted) return false;
+      handleHttpError(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context: context,
+            text: 'Login Successfull',
+          );
+        },
+      );
+      return true;
+    } catch (error) {
+      showSnackBar(
+        context: context,
+        text: error.toString(),
+      );
+      return false;
+    }
+  }
 }
