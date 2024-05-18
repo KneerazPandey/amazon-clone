@@ -1,3 +1,4 @@
+import 'package:amazon_frontend/core/common/bottom_bar.dart';
 import 'package:amazon_frontend/core/constant/app_color.dart';
 import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/routes/app_router.dart';
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: onGenerateRoute,
       debugShowCheckedModeBanner: false,
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }
