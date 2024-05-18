@@ -2,6 +2,8 @@ import 'package:amazon_frontend/core/constant/app_color.dart';
 import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/routes/app_router.dart';
 import 'package:amazon_frontend/features/auth/screens/auth_screen.dart';
+import 'package:amazon_frontend/features/auth/services/auth_service.dart';
+import 'package:amazon_frontend/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +24,22 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late AuthService _authService;
+
+  @override
+  void initState() {
+    _authService = AuthService();
+    _authService.getUserData(context: context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +60,9 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: onGenerateRoute,
       debugShowCheckedModeBanner: false,
-      home: const AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? const HomeScreen()
+          : const AuthScreen(),
     );
   }
 }

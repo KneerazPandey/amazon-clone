@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:amazon_frontend/core/constant/app_data.dart';
 import 'package:amazon_frontend/core/errors/errors.dart';
+import 'package:amazon_frontend/core/models/user.dart';
 import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/utils/show_snack_bar.dart';
 import 'package:amazon_frontend/features/home/screens/home_screen.dart';
@@ -76,13 +77,11 @@ class AuthService {
         context: context,
         onSuccess: () async {
           String token = json.decode(response.body)['token'];
-          print(token);
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString(AppData.tokenKey, token);
           if (!context.mounted) return;
-          Provider.of<UserProvider>(context, listen: false).setUser(
-            response.body,
-          );
+          User user = User.fromJson(response.body);
+          Provider.of<UserProvider>(context, listen: false).setUser(user);
           showSnackBar(
             context: context,
             text: 'Login Successfull',
@@ -95,6 +94,61 @@ class AuthService {
       );
       return true;
     } catch (error) {
+      showSnackBar(
+        context: context,
+        text: error.toString(),
+      );
+      return false;
+    }
+  }
+
+  Future<bool> getUserData({
+    required BuildContext context,
+  }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString(AppData.tokenKey);
+      if (token == null) {
+        prefs.setString(AppData.tokenKey, "");
+      }
+
+      Uri verifyTokenUrl =
+          Uri.parse('${AppData.baseUrl}/api/user/verify-token/');
+      Response tokenResponse = await post(
+        verifyTokenUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': token!,
+        },
+      );
+
+      bool verified = json.decode(tokenResponse.body);
+      if (verified) {
+        Uri uri = Uri.parse('${AppData.baseUrl}/api/user/data/');
+        Response response = await get(
+          uri,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': "Bearer $token",
+          },
+        );
+        if (!context.mounted) return false;
+        handleHttpError(
+          response: response,
+          context: context,
+          onSuccess: () async {
+            var userProvider = Provider.of<UserProvider>(
+              context,
+              listen: false,
+            );
+            User user = User.fromJson(response.body);
+            userProvider.setUser(user);
+          },
+        );
+      }
+      return true;
+    } catch (error) {
+      if (!context.mounted) return false;
       showSnackBar(
         context: context,
         text: error.toString(),
