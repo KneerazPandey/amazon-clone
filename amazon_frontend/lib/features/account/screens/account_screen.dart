@@ -56,6 +56,8 @@ class AccountScreen extends StatelessWidget {
           AccountBelowAppBar(),
           SizedBox(height: 10),
           AccountTopButtons(),
+          SizedBox(height: 20),
+          AccountOrders(),
         ],
       ),
     );
