@@ -1,4 +1,5 @@
 import 'package:amazon_frontend/core/constant/constant.dart';
+import 'package:amazon_frontend/features/account/widgets/account_top_buttons.dart';
 import 'package:amazon_frontend/features/account/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -53,9 +54,8 @@ class AccountScreen extends StatelessWidget {
       body: const Column(
         children: [
           AccountBelowAppBar(),
-          Center(
-            child: Text('Account Screen'),
-          ),
+          SizedBox(height: 10),
+          AccountTopButtons(),
         ],
       ),
     );
