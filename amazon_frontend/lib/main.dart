@@ -4,7 +4,6 @@ import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/routes/app_router.dart';
 import 'package:amazon_frontend/features/auth/screens/auth_screen.dart';
 import 'package:amazon_frontend/features/auth/services/auth_service.dart';
-import 'package:amazon_frontend/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
