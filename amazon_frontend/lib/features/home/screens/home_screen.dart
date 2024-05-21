@@ -1,8 +1,6 @@
 import 'package:amazon_frontend/core/constant/constant.dart';
-import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/features/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';
@@ -11,7 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -85,6 +82,8 @@ class HomeScreen extends StatelessWidget {
         body: const Column(
           children: <Widget>[
             AddressBox(),
+            SizedBox(height: 10),
+            TopCategories(),
           ],
         ),
       ),
