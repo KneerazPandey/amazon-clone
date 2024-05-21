@@ -60,7 +60,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _currentIndex == 2
+                    color: _currentIndex == 1
                         ? AppColor.selectedNavBarColor
                         : AppColor.backgroundColor,
                     width: 3,
@@ -77,7 +77,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _currentIndex == 3
+                    color: _currentIndex == 2
                         ? AppColor.selectedNavBarColor
                         : AppColor.backgroundColor,
                     width: 3,
