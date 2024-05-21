@@ -1,11 +1,11 @@
 import 'dart:convert';
 
+import 'package:amazon_frontend/core/common/bottom_bar.dart';
 import 'package:amazon_frontend/core/constant/app_data.dart';
 import 'package:amazon_frontend/core/errors/errors.dart';
 import 'package:amazon_frontend/core/models/user.dart';
 import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/utils/show_snack_bar.dart';
-import 'package:amazon_frontend/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +87,7 @@ class AuthService {
             text: 'Login Successfull',
           );
           Navigator.of(context).pushNamedAndRemoveUntil(
-            HomeScreen.routeName,
+            BottomBar.routeName,
             (route) => false,
           );
         },

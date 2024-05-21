@@ -9,6 +9,7 @@ class User extends Equatable {
   final String password;
   final String type;
   final String token;
+  final String address;
 
   const User({
     required this.id,
@@ -17,6 +18,7 @@ class User extends Equatable {
     required this.password,
     required this.type,
     required this.token,
+    required this.address,
   });
 
   User copyWith({
@@ -26,6 +28,7 @@ class User extends Equatable {
     String? password,
     String? type,
     String? token,
+    String? address,
   }) {
     return User(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class User extends Equatable {
       password: password ?? this.password,
       type: type ?? this.type,
       token: token ?? this.token,
+      address: address ?? this.address,
     );
   }
 
@@ -45,6 +49,7 @@ class User extends Equatable {
       'password': password,
       'type': type,
       'token': token,
+      'address': address,
     };
   }
 
@@ -56,6 +61,7 @@ class User extends Equatable {
       password: map['password'] as String,
       type: map['type'] as String,
       token: map['token'] as String,
+      address: map['address'] as String,
     );
   }
 
