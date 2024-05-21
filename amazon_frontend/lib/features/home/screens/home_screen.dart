@@ -84,6 +84,8 @@ class HomeScreen extends StatelessWidget {
             AddressBox(),
             SizedBox(height: 10),
             TopCategories(),
+            SizedBox(height: 10),
+            CarouselImage(),
           ],
         ),
       ),
