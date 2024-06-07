@@ -2,6 +2,7 @@ import 'package:amazon_frontend/core/common/bottom_bar.dart';
 import 'package:amazon_frontend/core/constant/app_color.dart';
 import 'package:amazon_frontend/core/providers/user_provider.dart';
 import 'package:amazon_frontend/core/routes/app_router.dart';
+import 'package:amazon_frontend/features/admin/screens/admin_screen.dart';
 import 'package:amazon_frontend/features/auth/screens/auth_screen.dart';
 import 'package:amazon_frontend/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,9 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: onGenerateRoute,
       debugShowCheckedModeBanner: false,
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const BottomBar()
+          ? Provider.of<UserProvider>(context).user.type == "user"
+              ? const BottomBar()
+              : const AdminScreen()
           : const AuthScreen(),
     );
   }
