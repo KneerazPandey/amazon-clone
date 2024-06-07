@@ -1,6 +1,8 @@
 import 'package:amazon_frontend/core/common/bottom_bar.dart';
 import 'package:amazon_frontend/features/account/screens/account_screen.dart';
+import 'package:amazon_frontend/features/admin/screens/add_product_screen.dart';
 import 'package:amazon_frontend/features/admin/screens/admin_screen.dart';
+import 'package:amazon_frontend/features/admin/screens/products_screen.dart';
 import 'package:amazon_frontend/features/auth/screens/auth_screen.dart';
 import 'package:amazon_frontend/core/errors/errors.dart';
 import 'package:amazon_frontend/features/cart/screens/cart_screen.dart';
@@ -38,6 +40,16 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (BuildContext context) => const AdminScreen(),
+      );
+    case ProductsScreen.routeName:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (BuildContext context) => const ProductsScreen(),
+      );
+    case AddProductScreen.routeName:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (BuildContext context) => const AddProductScreen(),
       );
     default:
       return MaterialPageRoute(
