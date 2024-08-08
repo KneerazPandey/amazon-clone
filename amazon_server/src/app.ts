@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import router from './routes/route';
+import { pathMiddleware } from './middlewares/path.middleware';
 
 
 export default class App {
@@ -23,6 +24,7 @@ export default class App {
         this.express.use(express.json());
         this.express.use(express.urlencoded({extended: true}));
         this.express.use(cors());
+        this.express.use(pathMiddleware);
     }
 
     private registerRoute() {

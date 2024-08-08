@@ -68,10 +68,9 @@ class AuthService {
         uri,
         body: json.encode(data),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          "Content-Type": "application/json",
         },
       );
-      if (!context.mounted) return false;
       handleHttpError(
         response: response,
         context: context,
@@ -79,7 +78,7 @@ class AuthService {
           String token = json.decode(response.body)['token'];
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString(AppData.tokenKey, token);
-          if (!context.mounted) return;
+          // if (!context.mounted) return;
           User user = User.fromJson(response.body);
           Provider.of<UserProvider>(context, listen: false).setUser(user);
           showSnackBar(

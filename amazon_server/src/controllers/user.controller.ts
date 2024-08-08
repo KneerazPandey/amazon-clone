@@ -31,6 +31,7 @@ export default class UserController {
     }
 
     public async login(req: Request, res: Response) {
+        console.log("This is the login controller");
         try {
             const { email, password } = req.body;
             if (!email || !password) {

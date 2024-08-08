@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    _authService = AuthService();
-    _authService.getUserData(context: context);
     super.initState();
+    _authService = AuthService();
+    Future.microtask(() => (_authService.getUserData(context: context)));
   }
 
   @override
@@ -62,9 +62,9 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: onGenerateRoute,
       debugShowCheckedModeBanner: false,
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? Provider.of<UserProvider>(context).user.type == "user"
-              ? const BottomBar()
-              : const AdminScreen()
+          ? Provider.of<UserProvider>(context).user.type == "admin"
+              ? const AdminScreen()
+              : const BottomBar()
           : const AuthScreen(),
     );
   }
