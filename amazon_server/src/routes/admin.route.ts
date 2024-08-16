@@ -10,4 +10,6 @@ adminRouter.post('/add-product', adminMiddleware, controller.addProduct);
 
 adminRouter.get('/get-products', adminMiddleware, controller.getProducts);
 
+adminRouter.delete('/delete-product', adminMiddleware, controller.deleteProduct);
+
 export default adminRouter;

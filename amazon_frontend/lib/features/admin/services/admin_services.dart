@@ -29,6 +29,7 @@ class AdminServices {
       final CloudinaryPublic cloudinary = CloudinaryPublic(
         dotenv.env['CLOUDINARY_NAME'] ?? '',
         dotenv.env['CLOUDINARY_UPLOAD_PRESET'] ?? '',
+        cache: false,
       );
 
       List<String> imageUrls = [];
@@ -104,6 +105,43 @@ class AdminServices {
     } catch (error) {
       showSnackBar(context: context, text: error.toString());
       return responseProduct;
+    }
+  }
+
+  Future<bool> deleteProduct({
+    required BuildContext context,
+    required Product productToDelete,
+  }) async {
+    try {
+      UserProvider userProvider =
+          Provider.of<UserProvider>(context, listen: false);
+      Uri uri = Uri.parse(
+        '${AppData.baseUrl}/api/admin/delete-product/',
+      );
+      Response response = await delete(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${userProvider.user.token}',
+        },
+        body: json.encode({
+          'id': productToDelete.id,
+        }),
+      );
+      if (!context.mounted) return false;
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.body.toString());
+      handleHttpError(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(context: context, text: 'Product successfully deleted');
+        },
+      );
+      return true;
+    } catch (error) {
+      showSnackBar(context: context, text: error.toString());
+      return false;
     }
   }
 }

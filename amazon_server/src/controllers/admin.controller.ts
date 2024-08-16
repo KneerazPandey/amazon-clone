@@ -24,4 +24,14 @@ export default class AdminController {
             return res.status(400).json({error: error.message});
         }
     }
+
+    public async deleteProduct(req: Request, res: Response) {
+        try {
+            const { id } = req.body;
+            await Product.findByIdAndDelete(id);
+            return res.status(200).json({success: 'Product deleted successfully'});
+        }catch(error: any) {
+            return res.status(400).json({error: error.message});
+        }
+    }
 }
